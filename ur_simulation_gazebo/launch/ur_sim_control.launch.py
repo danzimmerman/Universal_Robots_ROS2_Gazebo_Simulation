@@ -119,13 +119,61 @@ def launch_setup(context, *args, **kwargs):
             "prefix:=",
             prefix,
             " ",
+            "sim_gazebo:=false",
+            " ",
+            "simulation_controllers:=",
+            initial_joint_controllers,
+        ]
+    )
+
+    robot_description_content_gz = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [FindPackageShare(description_package), "urdf", description_file]
+            ),
+            " ",
+            "joint_limit_params:=",
+            joint_limit_params,
+            " ",
+            "kinematics_params:=",
+            kinematics_params,
+            " ",
+            "physical_params:=",
+            physical_params,
+            " ",
+            "visual_params:=",
+            visual_params,
+            " ",
+            "safety_limits:=",
+            safety_limits,
+            " ",
+            "safety_pos_margin:=",
+            safety_pos_margin,
+            " ",
+            "safety_k_position:=",
+            safety_k_position,
+            " ",
+            "name:=",
+            "ur",
+            " ",
+            "ur_type:=",
+            ur_type,
+            " ",
+            "prefix:=",
+            prefix,
+            " ",
             "sim_gazebo:=true",
             " ",
             "simulation_controllers:=",
             initial_joint_controllers,
         ]
     )
+
     robot_description = {"robot_description": robot_description_content}
+    robot_description_gz = {"robot_description": robot_description_content_gz}
+    
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -183,7 +231,7 @@ def launch_setup(context, *args, **kwargs):
         package="gazebo_ros",
         executable="spawn_entity.py",
         name="spawn_ur",
-        arguments=["-entity", "ur", "-topic", "robot_description"],
+        arguments=["-entity", "ur", "-topic", "robot_description_gz"],
         output="screen",
     )
 
