@@ -68,6 +68,19 @@ def launch_setup(context, *args, **kwargs):
         [FindPackageShare(description_package), "rviz", "view_robot.rviz"]
     )
 
+    joint_limit_params = PathJoinSubstitution(
+        [FindPackageShare(description_package), "config", ur_type, "joint_limits.yaml"]
+    )
+    kinematics_params = PathJoinSubstitution(
+        [FindPackageShare(description_package), "config", ur_type, "default_kinematics.yaml"]
+    )
+    physical_params = PathJoinSubstitution(
+        [FindPackageShare(description_package), "config", ur_type, "physical_parameters.yaml"]
+    )
+    visual_params = PathJoinSubstitution(
+        [FindPackageShare(description_package), "config", ur_type, "visual_parameters.yaml"]
+    )
+
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
@@ -75,6 +88,18 @@ def launch_setup(context, *args, **kwargs):
             PathJoinSubstitution(
                 [FindPackageShare(description_package), "urdf", description_file]
             ),
+            " ",
+            "joint_limit_params:=",
+            joint_limit_params,
+            " ",
+            "kinematics_params:=",
+            kinematics_params,
+            " ",
+            "physical_params:=",
+            physical_params,
+            " ",
+            "visual_params:=",
+            visual_params,
             " ",
             "safety_limits:=",
             safety_limits,
