@@ -158,7 +158,7 @@ def launch_setup(context, *args, **kwargs):
         package="gazebo_ros",
         executable="spawn_entity.py",
         name="spawn_ur",
-        arguments=["-entity", "ur", "-topic", "robot_description"],
+        arguments=["-entity", "ur", "-topic", "robot_description", "-package_to_model"], # make sure ur_description is on GAZEBO_MODEL_PATH
         output="screen",
     )
 
