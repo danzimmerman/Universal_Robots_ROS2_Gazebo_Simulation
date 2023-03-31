@@ -40,11 +40,22 @@
      force_abs_paths="false"/>
    
    <!-- 
+      See https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation/issues/19
+      We need to set fmax for ODE.
+      
       Joint dynamics damping and friction default to zero (from ur_description/config files)
       To address #19, we could define the joint dynamics in a config file, 
       but it does seem good to use some multiple of the effort limit
-      the effort limits are loaded by read_model_data
+      the effort limits are loaded by read_model_data and reside at this file's scope
+      so we can compute them on the fly here
    -->
+
+   <xacro:property name="shoulder_pan_friction" value="${shoulder_pan_effort_limit*100.0}"/>
+   <xacro:property name="shoulder_lift_friction" value="${shoulder_lift_effort_limit*100.0}"/>
+   <xacro:property name="elbow_joint_friction" value="${elbow_joint_effort_limit*100.0}"/>
+   <xacro:property name="wrist_1_friction" value="${wrist_1_effort_limit*100.0}"/>
+   <xacro:property name="wrist_2_friction" value="${wrist_2_effort_limit*100.0}"/>
+   <xacro:property name="wrist_3_friction" value="${wrist_3_effort_limit*100.0}"/>
 
    <!-- arm instance -->
    <xacro:ur_robot
