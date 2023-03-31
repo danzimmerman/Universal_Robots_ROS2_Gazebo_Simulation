@@ -42,7 +42,7 @@
    <!-- 
       See https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation/issues/19
       We need to set fmax for ODE.
-      
+
       Joint dynamics damping and friction default to zero (from ur_description/config files)
       To address #19, we could define the joint dynamics in a config file, 
       but it does seem good to use some multiple of the effort limit
