@@ -41,6 +41,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 
 
 def launch_setup(context, *args, **kwargs):
@@ -62,7 +63,9 @@ def launch_setup(context, *args, **kwargs):
 
     initial_joint_controllers = PathJoinSubstitution(
         [FindPackageShare(runtime_config_package), "config", controllers_file]
+        #[FindPackageShare("ur_description"), "config", "ur_controllers.yaml"]
     )
+
 
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare(description_package), "rviz", "view_robot.rviz"]
@@ -74,6 +77,7 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [FindPackageShare(description_package), "urdf", description_file]
+                #[FindPackageShare("ur_description"), "urdf", "ur.urdf.xacro"]
             ),
             " ",
             "safety_limits:=",
@@ -91,16 +95,17 @@ def launch_setup(context, *args, **kwargs):
             "ur_type:=",
             ur_type,
             " ",
+            "sim_gazebo:=true",
+            " ",
             "prefix:=",
             prefix,
-            " ",
-            "sim_gazebo:=true",
             " ",
             "simulation_controllers:=",
             initial_joint_controllers,
         ]
     )
-    robot_description = {"robot_description": robot_description_content}
+ 
+    robot_description = {"robot_description": ParameterValue(robot_description_content, value_type=str)} #not sure why ur_description doesn't need this, but I do :/ Error message was right about this.
 
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
@@ -234,7 +239,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ur.urdf.xacro",
+            default_value="ur_gazebo_classic.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
