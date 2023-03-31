@@ -1,0 +1,6 @@
+shoulder_pan_joint: 0.0
+shoulder_lift_joint: !degrees -60.0
+elbow_joint: !degrees -120.0
+wrist_1_joint: !degrees -90.0
+wrist_2_joint: !degrees 90.0
+wrist_3_joint: 0.0
