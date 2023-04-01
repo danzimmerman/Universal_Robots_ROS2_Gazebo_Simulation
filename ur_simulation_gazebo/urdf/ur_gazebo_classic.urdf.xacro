@@ -65,32 +65,9 @@
      safety_limits="$(arg safety_limits)"
      safety_pos_margin="$(arg safety_pos_margin)"
      safety_k_position="$(arg safety_k_position)"
+     sim_gazebo="true"
      >
      <origin xyz="0 0 0.05" rpy="0 0 0" />          <!-- position robot in the world, a little elevated to avoid base contact-->
    </xacro:ur_robot>
-
-   <!-- ros2 control, if needed -->
-   <xacro:ur_ros2_control
-      name="$(arg name)" prefix="$(arg prefix)"
-      add_non_joint_interfaces="false"
-      initial_positions="${xacro.load_yaml(initial_positions_file)}"
-      >
-      <!-- You could actually add custom non-joint state and command interfaces here too, don't know how to flag that-->
-      <ros2_control_hardware>
-         <hardware>
-            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-         </hardware>
-         <!-- Are there sensor plugins to define here as well? TODO: look into it -->
-      </ros2_control_hardware>
-   </xacro:ur_ros2_control>
-
-   <!-- now gazebo tags can just be in the gazebo package. No switching needed in ur_description -->
-   <gazebo reference="world">
-   </gazebo>
-   <gazebo>
-      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-         <parameters>$(arg simulation_controllers)</parameters>
-      </plugin>
-   </gazebo>
 
 </robot>
