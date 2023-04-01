@@ -36,7 +36,6 @@
      kinematics_parameters_file="$(arg kinematics_params)"
      physical_parameters_file="$(arg physical_params)"
      visual_parameters_file="$(arg visual_params)"
-     joint_dynamics_parameters_file="$(arg joint_dynamics_params)"
      force_abs_paths="false"/>
    
    <!-- 
