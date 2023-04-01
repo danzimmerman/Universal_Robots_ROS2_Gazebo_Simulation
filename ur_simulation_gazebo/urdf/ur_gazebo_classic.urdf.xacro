@@ -64,9 +64,44 @@
      safety_limits="$(arg safety_limits)"
      safety_pos_margin="$(arg safety_pos_margin)"
      safety_k_position="$(arg safety_k_position)"
-     sim_gazebo="true"
      >
      <origin xyz="0 0 0.05" rpy="0 0 0" />          <!-- position robot in the world, a little elevated to avoid base contact-->
    </xacro:ur_robot>
+
+   <!-- ros2 control instance -->
+   <xacro:ur_ros2_control
+     name="$(arg name)" prefix="$(arg prefix)"
+     use_fake_hardware="false"
+     fake_sensor_commands="false"
+     sim_gazebo="$(arg sim_gazebo)"
+     sim_ignition="false"
+     initial_positions="${xacro.load_yaml(initial_positions_file)}"
+     use_tool_communication="N/A"
+     tool_voltage="N/A"
+     tool_parity="N/A"
+     tool_baud_rate="N/A"
+     tool_stop_bits="N/A"
+     tool_rx_idle_chars="N/A"
+     tool_tx_idle_chars="N/A"
+     tool_device_name="N/A"
+     tool_tcp_port="N/A"
+     robot_ip="x.x.x.x"
+     script_filename="N/A"
+     output_recipe_filename="N/A"
+     input_recipe_filename="N/A"
+     reverse_ip="N/A"
+     script_command_port="N/A"
+     tf_prefix=""
+     hash_kinematics="N/A"     
+     />
+
+   <!-- Gazebo plugins -->
+   <gazebo reference="world">
+   </gazebo>
+   <gazebo>
+      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+         <parameters>$(arg simulation_controllers)</parameters>
+      </plugin>
+   </gazebo>
 
 </robot>
