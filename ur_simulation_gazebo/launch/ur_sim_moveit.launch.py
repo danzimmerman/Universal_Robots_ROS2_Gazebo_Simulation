@@ -62,6 +62,7 @@ def launch_setup(context, *args, **kwargs):
             "description_file": description_file,
             "prefix": prefix,
             "launch_rviz": "false",
+            "use_fake_hardware": "true"
         }.items(),
     )
 
@@ -72,8 +73,8 @@ def launch_setup(context, *args, **kwargs):
         launch_arguments={
             "ur_type": ur_type,
             "safety_limits": safety_limits,
-            "description_package": description_package,
-            "description_file": description_file,
+            "description_package": "ur_description",
+            "description_file": "ur.urdf.xacro",
             "moveit_config_package": moveit_config_package,
             "moveit_config_file": moveit_config_file,
             "prefix": prefix,
